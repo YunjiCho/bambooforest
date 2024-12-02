@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>대나무 숲 시각화</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      canvas {
+        display: block;
+      }
+      #printtext {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: white;
+        z-index: 10;
+      }
+      #minvolume {
+        position: absolute;
+        top: 60px;
+        left: 20px;
+        color: white;
+        z-index: 10;
+      }
+      #minupbutton {
+        position: absolute;
+        top: 60px;
+        left: 160px;
+        z-index: 10;
+      }
+      #mindownbutton {
+        position: absolute;
+        top: 60px;
+        left: 200px;
+        z-index: 10;
+      }
+      #maxvolume {
+        position: absolute;
+        top: 60px;
+        left: 240px;
+        color: white;
+        z-index: 10;
+      }
+      #maxupbutton {
+        position: absolute;
+        top: 60px;
+        left: 320px;
+        z-index: 10;
+      }
+      #maxdownbutton {
+        position: absolute;
+        top: 60px;
+        left: 360px;
+        z-index: 10;
+      }
+      #minfreq {
+        position: absolute;
+        top: 100px;
+        left: 20px;
+        color: white;
+        z-index: 10;
+      }
+      #minfrequpbutton {
+        position: absolute;
+        top: 100px;
+        left: 190px;
+        z-index: 10;
+      }
+      #minfreqdownbutton {
+        position: absolute;
+        top: 100px;
+        left: 230px;
+        z-index: 10;
+      }
+      #maxfreq {
+        position: absolute;
+        top: 100px;
+        left: 270px;
+        color: white;
+        z-index: 10;
+      }
+      #maxfrequpbutton {
+        position: absolute;
+        top: 100px;
+        left: 360px;
+        z-index: 10;
+      }
+      #maxfreqdownbutton {
+        position: absolute;
+        top: 100px;
+        left: 400px;
+        z-index: 10;
+      }
+      #lineratio {
+        position: absolute;
+        top: 140px;
+        left: 20px;
+        color: white;
+        z-index: 10;
+      }
+      #lineupbutton {
+        position: absolute;
+        top: 140px;
+        left: 60px;
+        z-index: 10;
+      }
+      #linedownbutton {
+        position: absolute;
+        top: 140px;
+        left: 100px;
+        z-index: 10;
+      }
+      #sizeratio {
+        position: absolute;
+        top: 180px;
+        left: 20px;
+        color: white;
+        z-index: 10;
+      }
+      #sizeupbutton {
+        position: absolute;
+        top: 180px;
+        left: 100px;
+        z-index: 10;
+      }
+      #sizedownbutton {
+        position: absolute;
+        top: 180px;
+        left: 140px;
+        z-index: 10;
+      }
+      #imagesettext {
+        position: absolute;
+        top: 220px;
+        left: 20px;
+        color: white;
+        z-index: 10;
+      }
+      #imagesetbutton {
+        position: absolute;
+        top: 220px;
+        left: 80px;
+        z-index: 10;
+      }
+      #redline {
+        position: absolute;
+        bottom: 10px;
+        width: 100%;
+        height: 2px;
+        background-color: red;
+      }
+      #blueline {
+        position: absolute;
+        top: 10px;
+        width: 100%;
+        height: 2px;
+        background-color: blue;
+      }
+      #offbutton {
+        position: absolute;
+        top: 260px;
+        left: 20px;
+        width: 100px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="printtext">안녕</div>
+
+    <div id="minvolume">30</div>
+    <button id="minupbutton">+</button>
+    <button id="mindownbutton">-</button>
+
+    <div id="maxvolume">80</div>
+    <button id="maxupbutton">+</button>
+    <button id="maxdownbutton">-</button>
+
+    <div id="minfreq">100</div>
+    <button id="minfrequpbutton">+</button>
+    <button id="minfreqdownbutton">-</button>
+
+    <div id="maxfreq">2000</div>
+    <button id="maxfrequpbutton">+</button>
+    <button id="maxfreqdownbutton">-</button>
+
+    <div id="lineratio">1</div>
+    <button id="lineupbutton">UP</button>
+    <button id="linedownbutton">DOWN</button>
+
+    <div id="sizeratio">1</div>
+    <button id="sizeupbutton">+</button>
+    <button id="sizedownbutton">-</button>
+
+    <div id="imagesettext">0</div>
+    <button id="imagesetbutton">CHANGE</button>
+
+    <div id="redline"></div>
+    <div id="blueline"></div>
+
+    <button id="offbutton">OFF</button>
+
+    <canvas id="canvas"></canvas>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/matter-js/0.18.0/matter.min.js"></script>
+    <script src="sketch.js"></script>
+    <script>
+      document
+        .getElementById("minupbutton")
+        .addEventListener("click", function () {
+          minvolume += 5;
+        });
+      document
+        .getElementById("mindownbutton")
+        .addEventListener("click", function () {
+          minvolume -= 5;
+        });
+
+      document
+        .getElementById("maxupbutton")
+        .addEventListener("click", function () {
+          maxvolume += 5;
+        });
+      document
+        .getElementById("maxdownbutton")
+        .addEventListener("click", function () {
+          maxvolume -= 5;
+        });
+
+      document
+        .getElementById("minfrequpbutton")
+        .addEventListener("click", function () {
+          minfrequency += 100;
+        });
+      document
+        .getElementById("minfreqdownbutton")
+        .addEventListener("click", function () {
+          minfrequency -= 100;
+        });
+
+      document
+        .getElementById("maxfrequpbutton")
+        .addEventListener("click", function () {
+          maxfrequency += 100;
+        });
+      document
+        .getElementById("maxfreqdownbutton")
+        .addEventListener("click", function () {
+          maxfrequency -= 100;
+        });
+
+      document
+        .getElementById("lineupbutton")
+        .addEventListener("click", function () {
+          lineHeightRatio += 0.1;
+          lineHeightRatio = Math.round(lineHeightRatio * 10) / 10;
+        });
+      document
+        .getElementById("linedownbutton")
+        .addEventListener("click", function () {
+          lineHeightRatio -= 0.1;
+          lineHeightRatio = Math.round(lineHeightRatio * 10) / 10;
+        });
+
+      document
+        .getElementById("sizeupbutton")
+        .addEventListener("click", function () {
+          sizeRatio += 0.1;
+          sizeRatio = Math.round(sizeRatio * 10) / 10;
+        });
+      document
+        .getElementById("sizedownbutton")
+        .addEventListener("click", function () {
+          sizeRatio -= 0.1;
+          sizeRatio = Math.round(sizeRatio * 10) / 10;
+        });
+
+      document
+        .getElementById("imagesetbutton")
+        .addEventListener("click", function () {
+          currentset += 1;
+          if (currentset == setnum + 1) {
+            currentset = 0;
+          }
+          if (currentset < setnum) {
+            settext = "set" + (currentset + 1);
+          } else {
+            settext = "freq";
+          }
+        });
+
+      function updateRedline() {
+        const redline = document.getElementById("redline");
+        redline.style.bottom = Math.round(lineHeightRatio * 100) + "%";
+      }
+      function updateBlueline() {
+        const blueline = document.getElementById("blueline");
+        blueline.style.top = minStackHeight + "px";
+      }
+
+      function updateText() {
+        document.getElementById("minvolume").textContent =
+          "[Volume]  min : " + minvolume;
+        document.getElementById("maxvolume").textContent = "max : " + maxvolume;
+        document.getElementById("minfreq").textContent =
+          "[Frequency]  min : " + minfrequency;
+        document.getElementById("maxfreq").textContent =
+          "max : " + maxfrequency;
+        document.getElementById("lineratio").textContent = lineHeightRatio;
+        document.getElementById("sizeratio").textContent =
+          "size : " + sizeRatio;
+        document.getElementById("imagesettext").textContent = settext;
+        document.getElementById("printtext").textContent = mytext;
+      }
+      setInterval(updateText, 50);
+      updateText();
+      setInterval(updateRedline, 50);
+      updateRedline();
+      setInterval(updateBlueline, 50);
+      updateBlueline();
+
+      document
+        .getElementById("offbutton")
+        .addEventListener("click", function () {
+          const elementsToHide = [
+            document.getElementById("printtext"),
+            document.getElementById("minvolume"),
+            document.getElementById("minupbutton"),
+            document.getElementById("mindownbutton"),
+            document.getElementById("maxvolume"),
+            document.getElementById("maxupbutton"),
+            document.getElementById("maxdownbutton"),
+            document.getElementById("minfreq"),
+            document.getElementById("minfrequpbutton"),
+            document.getElementById("minfreqdownbutton"),
+            document.getElementById("maxfreq"),
+            document.getElementById("maxfrequpbutton"),
+            document.getElementById("maxfreqdownbutton"),
+            document.getElementById("lineratio"),
+            document.getElementById("lineupbutton"),
+            document.getElementById("linedownbutton"),
+            document.getElementById("sizeratio"),
+            document.getElementById("sizeupbutton"),
+            document.getElementById("sizedownbutton"),
+            document.getElementById("imagesettext"),
+            document.getElementById("imagesetbutton"),
+            document.getElementById("offbutton"),
+            document.getElementById("redline"),
+            document.getElementById("blueline"),
+          ];
+          elementsToHide.forEach((element) => {
+            element.style.display = "none";
+          });
+        });
+    </script>
+  </body>
+</html>
