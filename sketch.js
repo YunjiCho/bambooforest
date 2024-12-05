@@ -73,7 +73,7 @@ const sizes = [
 let shapes = [];
 
 let mytext = "윤띠";
-let sizeRatio = 0.3;
+let sizeRatio = 0.5;
 let lineHeightRatio = 0.3;
 let minStackHeight = window.innerHeight;
 let currentfrequency = 0;
@@ -91,7 +91,7 @@ for (let i = 0; i < setnum; i++) {
   }
 }
 
-let minvolume = 5; //음량 최대/최솟값 설정
+let minvolume = 15; //음량 최대/최솟값 설정
 let maxvolume = 80;
 let currentvolume;
 let minfrequency = 100; //주파수 최대/최솟값 설정
