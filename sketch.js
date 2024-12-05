@@ -448,7 +448,7 @@ function draw() {
   }
 
   if (minStackHeight < (1 - lineHeightRatio) * window.innerHeight) {
-    removeBottomShapes();
+    //removeBottomShapes();
   }
 }
 
